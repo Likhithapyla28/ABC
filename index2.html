@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Prediction Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+</head>
+<body>
+    <h1>Model Prediction Dashboard</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="folder" directory="" webkitdirectory="" mozdirectory="" accept="image/*" required multiple>
+        <button type="submit">Predict</button>
+    </form>
+    {% if uploaded_images %}
+        <h2>Dirt Buildup Images:</h2>
+        {% for prediction in uploaded_images %}
+            <div class="result">
+                <p>Image: {{ prediction['image'] }}</p>
+                <p>File Path: {{ prediction['file_path'] }}</p>
+                <p>Prediction: {{ prediction['prediction_label'] }}</p>
+                <p>Probability: {{ prediction['prediction_prob'] }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No images uploaded.</p>
+    {% endif %}
+</body>
+</html>
